@@ -9,6 +9,21 @@
     <title>tspra</title>
   </head>
   <body>
+    <script>
+      (function () {
+      // Set fontSize for rem
+      function rem() {
+        var html = document.documentElement
+        var width = Math.min(html.getBoundingClientRect().width, 500)
+        var fontSize = width * 100 / 750 + 'px'
+        html.style.fontSize = fontSize
+      }
+      rem()
+      window.onresize = function () {     
+        rem()
+      }
+    })()
+    </script>
     <noscript>
       <strong>We're sorry but tspra doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>

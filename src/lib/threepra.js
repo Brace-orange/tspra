@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+// import { Button } from 'vant'
 
 // class Thre {
 //   constructor () {
@@ -49,12 +50,23 @@ let player = {
   speed: 0.8,
   turnSpeed: Math.PI * 0.02
 }
+let crate, cratTexture, crateNormalMap, crateBumpMap
+/**
+     * 清空当前obj对象的缓存
+     * @param mesh  mesh对象
+     * */
+function clearCache (mesh) {
+  console.log('mesh', mesh)
+  mesh.geometry.dispose()
+  mesh.material.dispose()
+}
 function create () {
+  // clearCache(crate)
+  // clearCache(cone1)
+  scene.remove()
   var geometry = new THREE.BoxGeometry(b, b, b)
   var material = new THREE.MeshPhongMaterial({ color: 0x00ff00, wireframe: false, skinning: true })
   // material.side = THREE.DoubleSide // 双面，不剔除背面
-  cube = new THREE.Mesh(geometry, material)
-  cube.position.set(0, 1, 0)
 
   // var geometryline = new THREE.Geometry()
   // geometryline.vertices.push(new THREE.Vector3(-10, 0, 0))
@@ -113,18 +125,59 @@ function create () {
   // var geometrycircle2 = new THREE.CircleGeometry(2, 32)
   circle3 = new THREE.Mesh(geometrycircle2, materialnew)
 
+  cube = new THREE.Mesh(geometry, material)
+  cube.receiveShadow = true
+  cube.castShadow = true
+  cube.position.set(0, 1, 0)
+
   var geometryplane1 = new THREE.PlaneBufferGeometry(20, 20, 32)
   var materialplane1 = new THREE.MeshPhongMaterial({ color: 0xffffff, side: THREE.DoubleSide })
   var plane1 = new THREE.Mesh(geometryplane1, materialplane1)
+  plane1.receiveShadow = true
+  // plane1.castShadow = true
   plane1.rotation.x = Math.PI / 2
   scene.add(plane1)
 
+  // renderer.shadowMap.enabled = true
+  // renderer.shadowMap.type = THREE.BasicShadowMap
   var ambientlight1 = new THREE.AmbientLight(0xffffff, 0.2)// soft white light
 
   var pointlight1 = new THREE.PointLight(0xffffff, 0.8, 100)
   pointlight1.position.set(0, 0, 0)
+  ambientlight1.castShadow = true
+  pointlight1.castShadow = true
   scene.add(ambientlight1)
   scene.add(pointlight1)
+
+  // 加载贴图
+  var textureLoader = new THREE.TextureLoader()
+  cratTexture = textureLoader.load(require('../assets/logo.png'), function (texture) {
+    console.log('enter texture', texture)
+    var geometry12 = new THREE.BoxGeometry(b, b, b)
+    var material12 = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture })
+    // material12.map = texture
+    crate = new THREE.Mesh(geometry12, material12)
+    crate.position.set(1, 1, 1)
+    crate.receiveShadow = true
+    crate.castShadow = true
+    scene.add(crate)
+  }, undefined, function (err) {
+    console.log(err)
+  })
+  crateNormalMap = textureLoader.load(require('../assets/images/dog.jpg'), function (texture) {
+    console.log('enter22 texture', texture)
+    var geometry12 = new THREE.BoxGeometry(b, b, b)
+    var material12 = new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture })
+    // material12.map = texture
+    crate = new THREE.Mesh(geometry12, material12)
+    crate.position.set(-1, 1, 1)
+    crate.receiveShadow = true
+    crate.castShadow = true
+    scene.add(crate)
+  }, undefined, function (err) {
+    console.log(err)
+  })
+  // crateBumpMap = textureLoader.load('src/assets/images/dog.jpg')
   // scene.add(line1)
   // scene.add(cube)
   // const typeitem = line
