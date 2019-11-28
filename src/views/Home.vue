@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Y  our Vue.js App"/> -->
+    <HelloWorld msg="Welcome to Y  our Vue.js App"/>
     <!-- <header @click="goto">111</header> -->
     <div></div>
     <footer></footer>
@@ -72,7 +72,7 @@ export default {
     }
   },
   components: {
-    // HelloWorld
+    HelloWorld,
     vanButton: Button
   }
 }

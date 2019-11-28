@@ -1,5 +1,17 @@
 // vue.config.js
+const path = require('path')
+function resolve (dir) {
+  console.log(path.join(__dirname, dir))
+  return path.join(__dirname, dir)
+}
+
 module.exports = {
+  chainWebpack (config) {
+    config.resolve.alias
+      .set('components', resolve('src/components'))
+      .set('assets', resolve('src/assets'))
+      // .set('c)
+  },
   devServer: {
     overlay: {
       warnings: true,
@@ -10,7 +22,7 @@ module.exports = {
     loaderOptions: {
       // 给 sass-loader 传递选项
       sass: {
-        data: `@import "@/assets/scss/mixin.scss";`
+        prependData: `@import "@/assets/css/mixin.scss";` // 共享的全局
       }
     }
   },

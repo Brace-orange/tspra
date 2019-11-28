@@ -13,13 +13,14 @@
       (function () {
       // Set fontSize for rem
       function rem() {
+        console.log(11111)
         var html = document.documentElement
         var width = Math.min(html.getBoundingClientRect().width, 500)
         var fontSize = width * 100 / 750 + 'px'
         html.style.fontSize = fontSize
       }
       rem()
-      window.onresize = function () {     
+      window.onresize = function () {
         rem()
       }
     })()
